@@ -13,12 +13,12 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
-#include <QtGui/QCommandLinkButton>
 #include <QtGui/QGridLayout>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
+#include <QtGui/QPushButton>
 #include <QtGui/QSpacerItem>
 #include <QtGui/QWidget>
 
@@ -43,11 +43,11 @@ public:
     QLineEdit *lineEdit_time;
     QWidget *widget_2;
     QHBoxLayout *horizontalLayout;
-    QCommandLinkButton *serial_button;
+    QPushButton *serial_button;
     QSpacerItem *horizontalSpacer;
-    QCommandLinkButton *bluetooth_button;
+    QPushButton *bluetooth_button;
     QSpacerItem *horizontalSpacer_2;
-    QCommandLinkButton *system_button;
+    QPushButton *system_button;
     QSpacerItem *horizontalSpacer_3;
 
     void setupUi(QWidget *Widget)
@@ -131,13 +131,32 @@ public:
 
         widget_2 = new QWidget(Widget);
         widget_2->setObjectName(QString::fromUtf8("widget_2"));
-        widget_2->setGeometry(QRect(20, 210, 441, 54));
+        widget_2->setGeometry(QRect(20, 173, 441, 101));
         horizontalLayout = new QHBoxLayout(widget_2);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        serial_button = new QCommandLinkButton(widget_2);
+        serial_button = new QPushButton(widget_2);
         serial_button->setObjectName(QString::fromUtf8("serial_button"));
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(serial_button->sizePolicy().hasHeightForWidth());
+        serial_button->setSizePolicy(sizePolicy);
+        serial_button->setMinimumSize(QSize(120, 60));
+        QFont font;
+        font.setPointSize(15);
+        font.setBold(true);
+        font.setItalic(false);
+        font.setUnderline(false);
+        font.setWeight(75);
+        font.setStrikeOut(false);
+        font.setStyleStrategy(QFont::PreferDefault);
+        serial_button->setFont(font);
+//        serial_button->setTabletTracking(false);
+        serial_button->setLayoutDirection(Qt::LeftToRight);
+        serial_button->setAutoFillBackground(false);
+        serial_button->setIconSize(QSize(20, 20));
 
         horizontalLayout->addWidget(serial_button);
 
@@ -145,8 +164,17 @@ public:
 
         horizontalLayout->addItem(horizontalSpacer);
 
-        bluetooth_button = new QCommandLinkButton(widget_2);
+        bluetooth_button = new QPushButton(widget_2);
         bluetooth_button->setObjectName(QString::fromUtf8("bluetooth_button"));
+        sizePolicy.setHeightForWidth(bluetooth_button->sizePolicy().hasHeightForWidth());
+        bluetooth_button->setSizePolicy(sizePolicy);
+        bluetooth_button->setMinimumSize(QSize(120, 60));
+        QFont font1;
+        font1.setPointSize(15);
+        font1.setBold(true);
+        font1.setWeight(75);
+        bluetooth_button->setFont(font1);
+        bluetooth_button->setIconSize(QSize(20, 20));
 
         horizontalLayout->addWidget(bluetooth_button);
 
@@ -154,8 +182,14 @@ public:
 
         horizontalLayout->addItem(horizontalSpacer_2);
 
-        system_button = new QCommandLinkButton(widget_2);
+        system_button = new QPushButton(widget_2);
         system_button->setObjectName(QString::fromUtf8("system_button"));
+        sizePolicy.setHeightForWidth(system_button->sizePolicy().hasHeightForWidth());
+        system_button->setSizePolicy(sizePolicy);
+        system_button->setMinimumSize(QSize(120, 60));
+        system_button->setFont(font1);
+//        system_button->setToolTipDuration(-1);
+        system_button->setIconSize(QSize(20, 20));
 
         horizontalLayout->addWidget(system_button);
 
@@ -163,6 +197,9 @@ public:
 
         horizontalLayout->addItem(horizontalSpacer_3);
 
+        system_button->raise();
+        serial_button->raise();
+        bluetooth_button->raise();
 
         retranslateUi(Widget);
 

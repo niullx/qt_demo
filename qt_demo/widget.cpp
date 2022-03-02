@@ -74,7 +74,7 @@ void Widget::get_system_info()
 }
 
 void Widget::get_cpu_use()
-{
+{    
     //获得CPU占用信息
     QString info_file_name("/proc/stat");
     QFileInfo file_info(info_file_name);

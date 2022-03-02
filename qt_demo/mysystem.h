@@ -10,6 +10,8 @@
 #include <QFileInfo>
 #include <QSettings>
 #include <QNetworkInterface>
+#include <QProcess>
+#include <QTextCodec>
 #include <stddef.h>
 
 #include "include.h"
@@ -31,6 +33,10 @@ private slots:
 
     void on_ip_comboBox_activated(const QString &arg1);
 
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
+
 signals:
     void back_system_signal();
 
@@ -43,7 +49,7 @@ private:
     struct CpuInfo_data cpu_info_data;
     struct MemInfo_data mem_info_data;
     struct DiskInfo_data disk_info_data;
-    int count=0;
+    QString Device_name;
 
 private:
     Ui::Mysystem *ui;

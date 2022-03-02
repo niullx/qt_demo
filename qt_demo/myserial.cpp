@@ -7,6 +7,8 @@ Myserial::Myserial(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("serial");
+    //支持Qt中文字库
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
     this->setWindowFlags(Qt::WindowStaysOnTopHint|Qt::WindowTitleHint| Qt::CustomizeWindowHint);
     connect(ui->commandLinkButton,SIGNAL(clicked()),this,SLOT(serial_back_click()));
 
@@ -54,8 +56,8 @@ void Myserial::on_refresh_Button_clicked()
 
     //先清除所有串口列表
      ui->comboBox_port->clear();
-
-/*   foreach(const QSerialPortInfo &info,QSerialPortInfo::availablePorts())
+/*
+   foreach(const QSerialPortInfo &info,QSerialPortInfo::availablePorts())
    {
        QSerialPort serial;
        serial.setPort(info);
@@ -70,9 +72,9 @@ void Myserial::on_refresh_Button_clicked()
        {
            ui->textEdit_received->insertPlainText("不可用："+serial.portName()+"\r\n");
        }
-   }*/
+   }
 
-   ui->textEdit_received->moveCursor(QTextCursor::End);        //光标移动到结尾
+   ui->textEdit_received->moveCursor(QTextCursor::End);        //光标移动到结尾*/
 }
 
 
@@ -112,7 +114,7 @@ void Myserial::on_open_button_port_clicked()
             return;
         }
 
- /*       serial = new QSerialPort;
+/*        serial = new QSerialPort;
         //设置串口名
         serial->setPortName(ui->comboBox_port->currentText());
         //打开串口
@@ -197,15 +199,15 @@ void Myserial::on_open_button_port_clicked()
 
 void Myserial::serial_read_slot()
 {
- /*   QString buf;
-    buf = QString(serial->readAll());
-    ui->textEdit_received->append(buf);*/
+//    QString buf;
+//   buf = QString(serial->readAll());
+//    ui->textEdit_received->append(buf);
 }
 
 //保存参数
 bool Myserial::SaveUartParam()
 {
-/*    if(configIni == NULL)
+    if(configIni == NULL)
         return false;
 
     //串口配置相关
@@ -219,13 +221,13 @@ bool Myserial::SaveUartParam()
     //停止位
     configIni->setValue("uartParam/StopBit",ui->comboBox_stop->currentText());
 
-    return true;*/
+    return true;
 }
 
 //根据配置文件初始化参数
 void Myserial::IniParamInit()
 {
-/*    if(QFile::exists("/home/niu/project/qt_demo/qss/param.ini"))
+    if(QFile::exists("/home/niu/project/qt_demo/qss/param.ini"))
     {
        configIni = new QSettings("/home/niu/project/t_demo/qss/param.ini", QSettings::IniFormat);
     }
@@ -239,7 +241,7 @@ void Myserial::IniParamInit()
        return;
     }
 
-    configIni->setIniCodec("UTF-8");
+/*    configIni->setIniCodec("UTF-8");
 
     //波特率
     QString  baudRate = configIni->value("uartParam/BaudRate").toString();
@@ -265,9 +267,5 @@ void Myserial::on_save_para_clicked()
     if(SaveUartParam())
     {
         QMessageBox::information(NULL,"保存参数","保存成功");
-    }
-    else
-    {
-        QMessageBox::warning(NULL,"保存参数","保存失败");
     }
 }

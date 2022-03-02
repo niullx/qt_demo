@@ -11,6 +11,7 @@
 #include <QFile>
 #include <QPalette>
 #include <QTextCodec>
+#include <stddef.h>
 
 #include "myserial.h"
 #include "mysystem.h"

@@ -9,6 +9,7 @@
 #include <QString>
 #include <QSettings>    //ini读写
 #include <QFile>
+#include <QTextCodec>
 
 namespace Ui {
 class Myserial;

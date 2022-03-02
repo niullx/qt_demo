@@ -1,6 +1,7 @@
 #include "mysystem.h"
 #include "ui_mysystem.h"
 
+#include <string.h>
 
 Mysystem::Mysystem(QWidget *parent) :
     QWidget(parent),
@@ -8,9 +9,11 @@ Mysystem::Mysystem(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("system information");
+    //支持Qt中文字库
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
     this->setWindowFlags(Qt::WindowStaysOnTopHint|Qt::WindowTitleHint| Qt::CustomizeWindowHint);
     connect(ui->back_button,SIGNAL(clicked()),this,SLOT(back_button_clicked()));
-
+    this->update();
     ui->cpu_info_text->setText("cpu"+NULL);
     system_init();
 }
@@ -181,7 +184,6 @@ void Mysystem::get_ip_info()
 //        qDebug()<<"name:"<<info.name();
 //        qDebug()<<info.allAddresses();
         ui->ip_comboBox->addItem(info.name());
-        count++;
         QList<QNetworkAddressEntry>entryList = info.addressEntries();
         foreach (QNetworkAddressEntry enlist, entryList)
         {
@@ -199,6 +201,7 @@ void Mysystem::get_ip_info()
 
 void Mysystem::on_ip_comboBox_activated(const QString &arg1)
 {
+    Device_name = arg1;
     QList<QNetworkInterface> list = QNetworkInterface::allInterfaces();
     foreach (QNetworkInterface info, list) {
         QString name = info.name();
@@ -211,9 +214,34 @@ void Mysystem::on_ip_comboBox_activated(const QString &arg1)
                 {
 //                     qDebug()<<"IP:"<<enlist.ip().toString();
                      ui->ip_lineEdit->setText(enlist.ip().toString());
+
                 }
             }
 
         }
     }
+}
+
+void Mysystem::on_pushButton_clicked()
+{
+    QString ip = ui->ip_lineEdit->text();
+    QStringList list = QStringList()
+            <<"bash"
+            <<"-c"
+            <<QString("ifconfig %1 %2").arg(Device_name).arg(ip);
+     QProcess p;
+     p.start("pkexec",list);
+//     p.start("pkexec",{"bash","-c","ifconfig enp0s3 10.0.2.10"});//pkexec是输入密码提升权限的命令，后面是执行命令 bash -c就是用bash 执行一个命令
+     p.waitForStarted();
+     p.waitForFinished();
+}
+
+void Mysystem::on_pushButton_2_clicked()
+{
+    ui->cpu_info_text->clear();
+    ui->ip_all_info_textBrowser->clear();
+    ui->ip_comboBox->clear();
+    ui->ip_lineEdit->clear();
+    this->update();
+    system_init();
 }
