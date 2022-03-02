@@ -55,7 +55,7 @@ void Myserial::on_refresh_Button_clicked()
     //先清除所有串口列表
      ui->comboBox_port->clear();
 
-   foreach(const QSerialPortInfo &info,QSerialPortInfo::availablePorts())
+/*   foreach(const QSerialPortInfo &info,QSerialPortInfo::availablePorts())
    {
        QSerialPort serial;
        serial.setPort(info);
@@ -70,7 +70,7 @@ void Myserial::on_refresh_Button_clicked()
        {
            ui->textEdit_received->insertPlainText("不可用："+serial.portName()+"\r\n");
        }
-   }
+   }*/
 
    ui->textEdit_received->moveCursor(QTextCursor::End);        //光标移动到结尾
 }
@@ -94,9 +94,9 @@ void Myserial::on_send_button_clicked()
         QMessageBox::warning(NULL, "警告", "未打开可用串口，无法发送数据！\r\n\r\n");
         return;
     }
-    QString data =ui->textEdit_send->toPlainText();
+/*    QString data =ui->textEdit_send->toPlainText();
 
-   serial->write(data.toLatin1());
+   serial->write(data.toLatin1());*/
 
 
 }
@@ -112,7 +112,7 @@ void Myserial::on_open_button_port_clicked()
             return;
         }
 
-        serial = new QSerialPort;
+ /*       serial = new QSerialPort;
         //设置串口名
         serial->setPortName(ui->comboBox_port->currentText());
         //打开串口
@@ -171,11 +171,11 @@ void Myserial::on_open_button_port_clicked()
 
         //连接信号和槽函数，串口有数据可读时，调用ReadData()函数读取数据并处理。
         connect(serial,SIGNAL(readyRead()),this,SLOT(serial_read_slot()));
-        ui->open_button_port->setStyleSheet("background-color:red");
+        ui->open_button_port->setStyleSheet("background-color:red");*/
     }
     else
     {
-        if(serial->isOpen())       //原先串口打开，则关闭串口
+/*        if(serial->isOpen())       //原先串口打开，则关闭串口
         {
             serial->close();
         }
@@ -191,21 +191,21 @@ void Myserial::on_open_button_port_clicked()
         ui->comboBox_check->setEnabled(true);
         ui->comboBox_stop->setEnabled(true);
         ui->open_button_port->setText("打开串口");
-        ui->open_button_port->setStyleSheet("");
+        ui->open_button_port->setStyleSheet("");*/
     }
 }
 
 void Myserial::serial_read_slot()
 {
-    QString buf;
+ /*   QString buf;
     buf = QString(serial->readAll());
-    ui->textEdit_received->append(buf);
+    ui->textEdit_received->append(buf);*/
 }
 
 //保存参数
 bool Myserial::SaveUartParam()
 {
-    if(configIni == NULL)
+/*    if(configIni == NULL)
         return false;
 
     //串口配置相关
@@ -219,13 +219,13 @@ bool Myserial::SaveUartParam()
     //停止位
     configIni->setValue("uartParam/StopBit",ui->comboBox_stop->currentText());
 
-    return true;
+    return true;*/
 }
 
 //根据配置文件初始化参数
 void Myserial::IniParamInit()
 {
-    if(QFile::exists("/home/niu/project/qt_demo/qss/param.ini"))
+/*    if(QFile::exists("/home/niu/project/qt_demo/qss/param.ini"))
     {
        configIni = new QSettings("/home/niu/project/t_demo/qss/param.ini", QSettings::IniFormat);
     }
@@ -256,7 +256,7 @@ void Myserial::IniParamInit()
 
     //停止位
     QString  stopBit = configIni->value("uartParam/StopBit").toString();
-    ui->comboBox_stop->setCurrentText(stopBit);
+    ui->comboBox_stop->setCurrentText(stopBit);*/
 
 }
 
@@ -265,5 +265,9 @@ void Myserial::on_save_para_clicked()
     if(SaveUartParam())
     {
         QMessageBox::information(NULL,"保存参数","保存成功");
+    }
+    else
+    {
+        QMessageBox::warning(NULL,"保存参数","保存失败");
     }
 }

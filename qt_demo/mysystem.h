@@ -10,6 +10,7 @@
 #include <QFileInfo>
 #include <QSettings>
 #include <QNetworkInterface>
+#include <stddef.h>
 
 #include "include.h"
 

@@ -3,8 +3,8 @@
 
 #include <QWidget>
 #include <QDebug>
-#include <QtSerialPort>
-#include <QSerialPortInfo>
+//#include <QtSerialPort>
+//#include <QSerialPortInfo>
 #include <QMessageBox>
 #include <QString>
 #include <QSettings>    //ini读写
@@ -49,7 +49,7 @@ private:
 
 private:
     Ui::Myserial *ui;
-    QSerialPort *serial;            //全局的串口对象
+//    QSerialPort *serial;            //全局的串口对象
     QSettings *configIni;           //配置文件
 };
 

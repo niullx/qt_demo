@@ -1,7 +1,6 @@
 #include "mysystem.h"
 #include "ui_mysystem.h"
 
-#include <string.h>
 
 Mysystem::Mysystem(QWidget *parent) :
     QWidget(parent),
@@ -45,8 +44,8 @@ void Mysystem::get_cpu_info()
     if(file_info.isFile())
     {
         //提取文件中的数据
-        std::FILE *cpu_fd = std::fopen(info_file_name.toLatin1().data(),"r");
-        if(std::fscanf(cpu_fd,"cpu  %lld %lld %lld %lld %lld %lld %lld %lld",\
+        FILE *cpu_fd = fopen(info_file_name.toLatin1().data(),"r");
+        if(fscanf(cpu_fd,"cpu  %lld %lld %lld %lld %lld %lld %lld %lld",\
                     &cpu_info_data.usr,&cpu_info_data.nic,&cpu_info_data.sys, \
                     &cpu_info_data.idle,&cpu_info_data.iowait, \
                     &cpu_info_data.irq,&cpu_info_data.softirq, \
@@ -54,7 +53,7 @@ void Mysystem::get_cpu_info()
         {
             qDebug() << "failed to read " << info_file_name;
         }
-        std::fclose(cpu_fd);
+        fclose(cpu_fd);
         //计算CPU总资源数
         cpu_info_data.total = cpu_info_data.usr + cpu_info_data.nic + cpu_info_data.sys + cpu_info_data.idle + cpu_info_data.iowait + cpu_info_data.irq + cpu_info_data.softirq + cpu_info_data.steal;
         //获取CPU占用率
@@ -117,10 +116,10 @@ void Mysystem::get_mem_info()
     QFileInfo file_info(file_info_name);
     if(file_info.isFile())
     {
-        std::FILE *mem_fd = std::fopen(file_info_name.toLatin1().data(),"r");
-        std::fscanf(mem_fd,"MemTotal: %lu kB\n",&mem_info_data.total);
-        std::fscanf(mem_fd,"MemFree: %lu kB\n",&mem_info_data.free);
-        std::fclose(mem_fd);
+        FILE *mem_fd = fopen(file_info_name.toLatin1().data(),"r");
+        fscanf(mem_fd,"MemTotal: %lu kB\n",&mem_info_data.total);
+        fscanf(mem_fd,"MemFree: %lu kB\n",&mem_info_data.free);
+        fclose(mem_fd);
         mem_info_data.used = mem_info_data.total - mem_info_data.free;
         mem_info_data.rate = static_cast<double>((double)mem_info_data.used / (double)mem_info_data.total) * 100.0;
 

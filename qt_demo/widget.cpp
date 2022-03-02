@@ -74,7 +74,7 @@ void Widget::get_system_info()
 }
 
 void Widget::get_cpu_use()
-{    
+{
     //获得CPU占用信息
     QString info_file_name("/proc/stat");
     QFileInfo file_info(info_file_name);
@@ -82,8 +82,8 @@ void Widget::get_cpu_use()
     if(file_info.isFile())
     {
         //提取文件中的数据
-        std::FILE *cpu_fd = std::fopen(info_file_name.toLatin1().data(),"r");
-        if(std::fscanf(cpu_fd,"cpu  %lld %lld %lld %lld %lld %lld %lld %lld",\
+        FILE *cpu_fd = fopen(info_file_name.toLatin1().data(),"r");
+        if(fscanf(cpu_fd,"cpu  %lld %lld %lld %lld %lld %lld %lld %lld",\
                     &cpu_info_data.usr,&cpu_info_data.nic,&cpu_info_data.sys, \
                     &cpu_info_data.idle,&cpu_info_data.iowait, \
                     &cpu_info_data.irq,&cpu_info_data.softirq, \
@@ -91,7 +91,7 @@ void Widget::get_cpu_use()
         {
             qDebug() << "failed to read " << info_file_name;
         }
-        std::fclose(cpu_fd);
+        fclose(cpu_fd);
         //计算CPU总资源数
         cpu_info_data.total = cpu_info_data.usr + cpu_info_data.nic + cpu_info_data.sys + cpu_info_data.idle + cpu_info_data.iowait + cpu_info_data.irq + cpu_info_data.softirq + cpu_info_data.steal;
         //获取CPU占用率
